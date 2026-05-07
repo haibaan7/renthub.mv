@@ -113,93 +113,60 @@
 </main>
 
 <script>
-    // YOUR PUBLISHED GOOGLE SHEET LINK
-    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRhsdb2SnBhoIdUFDNa3mU109BPyaVBncVyfUDxP2T806KMXCc15CRjo3853CGaT7GX-5vqQFInXGVa/pub?output=csv";
+    const BASE_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRhsdb2SnBhoIdUFDNa3mU109BPyaVBncVyfUDxP2T806KMXCc15CRjo3853CGaT7GX-5vqQFInXGVa/pub?output=csv";
+    const CSV_URL = "https://api.allorigins.win/raw?url=" + encodeURIComponent(BASE_URL);
 
     let RENTAL_DATA = [];
-    let activeCategory = "All";
 
-    // FETCH DATA
     function loadItems() {
         Papa.parse(CSV_URL, {
             download: true,
             header: true,
+            skipEmptyLines: true,
             complete: function(results) {
-                // Filter out rows that don't have an ID or Title
-                RENTAL_DATA = results.data.filter(row => row.id && row.title);
+                // This part fixes column names automatically
+                RENTAL_DATA = results.data.map(row => {
+                    const cleanRow = {};
+                    for (let key in row) {
+                        let k = key.toLowerCase().trim();
+                        // If you used 'photo', rename it to 'image' for the code
+                        if (k === 'photo') k = 'image'; 
+                        cleanRow[k] = row[key];
+                    }
+                    return cleanRow;
+                }).filter(item => item.title);
+
                 document.getElementById('loading').style.display = 'none';
                 render(RENTAL_DATA);
             }
         });
     }
 
-    // DISPLAY ITEMS
     function render(items) {
         const grid = document.getElementById('itemsGrid');
-        
-        if (items.length === 0) {
-            grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:50px; font-weight:800; color:#999;">No items found. Try a different search!</div>';
-            return;
-        }
-
         grid.innerHTML = items.map(item => `
             <div class="card">
                 <div class="photo-box">
-                    <span class="id-badge">Ref: #${item.id}</span>
+                    <span class="id-badge">Ref: #${item.id || '0'}</span>
                     <img src="${item.image || 'https://via.placeholder.com/400x300?text=No+Image'}" 
-                         onerror="this.src='https://via.placeholder.com/400x300?text=Check+Image+Link'">
+                         onerror="this.src='https://via.placeholder.com/400x300?text=Check+Link'">
                 </div>
                 <div class="card-body">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span class="tag">${item.category || 'General'}</span>
-                        <span class="price">MVR ${item.price}</span>
+                        <span class="price">${item.price}</span>
                     </div>
-                    <h3>${item.title}</h3>
-                    <div class="location">📍 ${item.location || 'Maldives'}</div>
-                    
+                    <h3 style="margin:12px 0 5px">${item.title}</h3>
+                    <div class="location">📍 ${item.location}</div>
                     <div class="contact-btns">
-                        <a href="https://wa.me/960${item.contact}?text=Hi, I am interested in ${item.title} (Ref: #${item.id})" target="_blank" class="btn-wa">
-                            WhatsApp
-                        </a>
-                        <a href="tel:960${item.contact}" class="btn-call">
-                            Call
-                        </a>
+                        <a href="https://wa.me/960${item.contact}" target="_blank" class="btn-wa">WhatsApp</a>
+                        <a href="tel:960${item.contact}" class="btn-call">Call</a>
                     </div>
                 </div>
             </div>
         `).join('');
     }
 
-    // SEARCH & FILTER LOGIC
-    const searchInput = document.getElementById('searchInput');
-    const chips = document.querySelectorAll('.chip');
-
-    function applyFilters() {
-        const query = searchInput.value.toLowerCase();
-        
-        const filtered = RENTAL_DATA.filter(item => {
-            const matchesSearch = item.title.toLowerCase().includes(query) || item.id.toString().includes(query);
-            const matchesCat = (activeCategory === "All") || (item.category === activeCategory);
-            return matchesSearch && matchesCat;
-        });
-
-        render(filtered);
-    }
-
-    // Listen for search typing
-    searchInput.addEventListener('input', applyFilters);
-
-    // Listen for Category clicks
-    chips.forEach(chip => {
-        chip.addEventListener('click', () => {
-            chips.forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-            activeCategory = chip.innerText;
-            applyFilters();
-        });
-    });
-
-    // Run on startup
     loadItems();
 </script>
 
