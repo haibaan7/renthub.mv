@@ -23,16 +23,26 @@
 RentHub.mv
 </div>
 
-<div class="links">
+<div class="links" id="nav-links">
 <a class="active" href="#">Home</a>
 <a href="list-item.html">List Item</a>
 <a href="contact.html">Contact</a>
 </div>
 
+<button class="menu-btn" id="menu-btn" onclick="toggleMenu()">
+☰
+</button>
+
 <a href="#rentals" class="btn btn-primary">
 Browse Rentals
 </a>
 
+</div>
+
+<div class="mobile-menu" id="mobile-menu">
+<a href="#" class="mobile-link">Home</a>
+<a href="list-item.html" class="mobile-link">List Item</a>
+<a href="contact.html" class="mobile-link">Contact</a>
 </div>
 
 </header>
@@ -63,7 +73,7 @@ See price, location, contact number before messaging.
 Browse Rentals
 </a>
 
-<a href="#" class="btn btn-light">
+<a href="list-item.html" class="btn btn-light">
 List Your Item
 </a>
 
@@ -164,6 +174,15 @@ Search by item name, category or location.
 
 <div class="search-container">
 <input type="text" id="search" placeholder="Search items...">
+<select id="category">
+<option value="">All Categories</option>
+<option>Camera</option>
+<option>Event</option>
+<option>Tools</option>
+<option>Vehicles</option>
+<option>Bikes</option>
+<option>Electronics</option>
+</select>
 <select id="location">
 <option value="">All Locations</option>
 <option>Male'</option>
@@ -180,6 +199,7 @@ Search by item name, category or location.
 <option>Huraa</option>
 <option>Kaashidhoo</option>
 </select>
+<button id="clear-btn" class="btn-clear">Clear Filters</button>
 </div>
 
 <div class="grid">
@@ -358,45 +378,60 @@ Contact directly via WhatsApp.
 </footer>
 
 <script>
+let currentCategory = '';
+let currentLocation = '';
+let currentSearch = '';
+
+function toggleMenu() {
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('active');
+}
+
 function filterByCategory(category) {
+    currentCategory = category;
+    applyFilters();
+}
+
+function applyFilters() {
     const cards = document.querySelectorAll('.card');
     cards.forEach(card => {
-        if (card.dataset.category === category || category === 'all') {
-            card.style.display = 'block';
-        } else {
-            card.style.display = 'none';
-        }
+        const matchCategory = !currentCategory || card.dataset.category === currentCategory;
+        const matchLocation = !currentLocation || card.dataset.location === currentLocation;
+        const title = card.querySelector('h3').textContent.toLowerCase();
+        const tag = card.querySelector('.tag').textContent.toLowerCase();
+        const matchSearch = !currentSearch || title.includes(currentSearch) || tag.includes(currentSearch);
+        
+        card.style.display = matchCategory && matchLocation && matchSearch ? 'block' : 'none';
     });
 }
 
 document.getElementById('search').addEventListener('input', function() {
-    const query = this.value.toLowerCase();
-    const cards = document.querySelectorAll('.card');
-    cards.forEach(card => {
-        const title = card.querySelector('h3').textContent.toLowerCase();
-        const tag = card.querySelector('.tag').textContent.toLowerCase();
-        if (title.includes(query) || tag.includes(query)) {
-            card.style.display = 'block';
-        } else {
-            card.style.display = 'none';
-        }
-    });
+    currentSearch = this.value.toLowerCase();
+    applyFilters();
+});
+
+document.getElementById('category').addEventListener('change', function() {
+    currentCategory = this.value;
+    applyFilters();
 });
 
 document.getElementById('location').addEventListener('change', function() {
-    const location = this.value;
-    const cards = document.querySelectorAll('.card');
-    cards.forEach(card => {
-        if (location === '' || card.dataset.location === location) {
-            card.style.display = 'block';
-        } else {
-            card.style.display = 'none';
-        }
-    });
+    currentLocation = this.value;
+    applyFilters();
+});
+
+document.getElementById('clear-btn').addEventListener('click', function() {
+    currentCategory = '';
+    currentLocation = '';
+    currentSearch = '';
+    document.getElementById('search').value = '';
+    document.getElementById('category').value = '';
+    document.getElementById('location').value = '';
+    applyFilters();
 });
 
 // Initially show all
-filterByCategory('all');
+applyFilters();
 </script>
 
 </body>
