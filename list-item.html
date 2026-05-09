@@ -96,7 +96,7 @@
                         <label for="item-description">Description</label>
                         <textarea id="item-description" placeholder="Tell renters about the item and availability."></textarea>
                     </div>
-                    <button type="button" class="btn">Submit listing</button>
+                    <button type="button" class="btn" id="submit-btn">Submit listing</button>
                 </div>
             </div>
 
@@ -121,7 +121,24 @@
     </main>
 
     <footer class="container">
-        <p>� 2026 RentHub.mv � Start listing rentals across Maldives.</p>
+        <p>© 2026 RentHub.mv • Start listing rentals across Maldives.</p>
     </footer>
+
+    <script>
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            const title = document.getElementById('item-title').value;
+            const category = document.getElementById('item-category').value;
+            const price = document.getElementById('item-price').value;
+            const location = document.getElementById('item-location').value;
+            const contact = document.getElementById('item-contact').value;
+            const photo = document.getElementById('item-photo').value;
+            const description = document.getElementById('item-description').value;
+
+            const message = `🏠 New Rental Listing on RentHub.mv\n\n📌 Title: ${title}\n🏷️ Category: ${category}\n💰 Price: ${price}\n📍 Location: ${location}\n📞 Contact: ${contact}\n🖼️ Photo: ${photo}\n📝 Description: ${description}\n\n#RentHub #MaldivesRentals`;
+
+            const whatsappUrl = `https://wa.me/9607873015?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, 'https://wa.me/9607873015');
+        });
+    </script>
 </body>
 </html>
