@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Item | RentHub.mv</title>
+    <meta name="description" content="List an item for rent on RentHub.mv.">
+    <style>
+        :root {
+            --deep: #0B3C5D;
+            --teal: #00A8A8;
+            --gray: #f3f6f8;
+            --line: #e6edf2;
+            --shadow: 0 18px 45px rgba(11, 60, 93, .12);
+            --radius: 24px;
+        }
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: Inter, Arial, sans-serif; background: #fbfdff; color: var(--deep); }
+        a { color: inherit; text-decoration: none; }
+        button, input, textarea, select { font: inherit; }
+        .container { width: min(1120px, 94%); margin: auto; }
+        header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.95); backdrop-filter: blur(18px); border-bottom: 1px solid var(--line); }
+        .nav { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 18px 0; }
+        .brand { font-weight: 900; font-size: 22px; }
+        .nav-links { display: flex; align-items: center; gap: 20px; color: #344054; font-weight: 700; }
+        .nav-links a:hover, .nav-links a.active { color: var(--teal); }
+        .hero { padding: 70px 0 30px; }
+        .hero h1 { margin: 0 0 14px; font-size: clamp(34px, 5vw, 52px); }
+        .hero p { margin: 0; color: #475467; line-height: 1.75; max-width: 680px; }
+        .grid { display: grid; grid-template-columns: 1.35fr .85fr; gap: 28px; }
+        .form-card, .info-card { background: #fff; border: 1px solid var(--line); border-radius: 28px; box-shadow: var(--shadow); padding: 28px; }
+        .form-grid { display: grid; gap: 18px; }
+        .field { display: grid; gap: 10px; }
+        .field label { font-weight: 700; color: var(--deep); }
+        .field input, .field textarea, .field select { width: 100%; padding: 14px 16px; border: 1px solid var(--line); border-radius: 16px; background: #fff; }
+        .field textarea { min-height: 150px; resize: vertical; }
+        .btn { border: 0; border-radius: 999px; padding: 15px 24px; background: var(--deep); color: #fff; font-weight: 900; cursor: pointer; }
+        .info-card h2 { margin-top: 0; }
+        .info-row { display: grid; gap: 16px; margin-top: 22px; }
+        .info-box { border: 1px solid var(--line); border-radius: 22px; padding: 18px; background: #f8fdff; }
+        footer { padding: 32px 0; border-top: 1px solid var(--line); color: #667085; }
+        @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav">
+            <a class="brand" href="index.html">RentHub.mv</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a class="active" href="list-item.html">List Item</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h1>List your rental item in minutes</h1>
+            <p>Share your equipment, boat, or accommodation with renters across Maldives. Our simple form helps you publish a listing fast.</p>
+        </section>
+
+        <div class="grid">
+            <div class="form-card">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="item-title">Item title</label>
+                        <input id="item-title" type="text" placeholder="e.g. GoPro Hero 11 Black">
+                    </div>
+                    <div class="field">
+                        <label for="item-category">Category</label>
+                        <select id="item-category">
+                            <option>Accommodation</option>
+                            <option>Electronics</option>
+                            <option>Tools</option>
+                            <option>Boats & Water Sports</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="item-price">Price</label>
+                        <input id="item-price" type="text" placeholder="e.g. 250 / day">
+                    </div>
+                    <div class="field">
+                        <label for="item-location">Location</label>
+                        <input id="item-location" type="text" placeholder="e.g. Male' or Hulhumale">
+                    </div>
+                    <div class="field">
+                        <label for="item-contact">Contact number</label>
+                        <input id="item-contact" type="text" placeholder="e.g. 7873090">
+                    </div>
+                    <div class="field">
+                        <label for="item-photo">Photo URL</label>
+                        <input id="item-photo" type="text" placeholder="https://example.com/photo.jpg">
+                    </div>
+                    <div class="field">
+                        <label for="item-description">Description</label>
+                        <textarea id="item-description" placeholder="Tell renters about the item and availability."></textarea>
+                    </div>
+                    <button type="button" class="btn">Submit listing</button>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h2>How it works</h2>
+                <div class="info-row">
+                    <div class="info-box">
+                        <strong>1. Add your item</strong>
+                        <p>Provide a title, price, location, and contact details so renters can find you.</p>
+                    </div>
+                    <div class="info-box">
+                        <strong>2. Stay responsive</strong>
+                        <p>Respond quickly to WhatsApp and calls from interested renters.</p>
+                    </div>
+                    <div class="info-box">
+                        <strong>3. Get bookings</strong>
+                        <p>Let renters know your availability and finalise rental details directly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="container">
+        <p>© 2026 RentHub.mv · Start listing rentals across Maldives.</p>
+    </footer>
+</body>
+</html>

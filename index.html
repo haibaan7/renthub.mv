@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RentHub.mv</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+
+<div class="container nav">
+
+<div class="brand">
+<img src="character.png" alt="">
+RentHub.mv
+</div>
+
+<div class="links">
+<a class="active" href="#">Home</a>
+<a href="list-item.html">List Item</a>
+<a href="contact.html">Contact</a>
+</div>
+
+<a href="#rentals" class="btn btn-primary">
+Browse Rentals
+</a>
+
+</div>
+
+</header>
+
+<!-- HERO -->
+<section class="hero">
+
+<div class="container hero-grid">
+
+<div>
+
+<div class="badge">
+mv Maldives rental marketplace
+</div>
+
+<h1>
+Rent Anything in Maldives
+</h1>
+
+<p>
+Browse rental items from local owners.
+See price, location, contact number before messaging.
+</p>
+
+<div class="hero-actions">
+
+<a href="#rentals" class="btn btn-primary">
+Browse Rentals
+</a>
+
+<a href="#" class="btn btn-light">
+List Your Item
+</a>
+
+</div>
+
+</div>
+
+<div class="hero-card">
+
+<div class="mini">
+<b>Simple marketplace</b>
+<span>Browse • Contact • Rent</span>
+</div>
+
+<div class="blob"></div>
+
+<img src="character.png" class="character">
+
+</div>
+
+</div>
+
+</section>
+
+<!-- CATEGORIES -->
+<section class="section">
+
+<div class="container">
+
+<div class="section-head">
+
+<div>
+<h2>Popular categories</h2>
+
+<p class="muted">
+Start with the items people rent most often.
+</p>
+</div>
+
+</div>
+
+<div class="categories">
+
+<div class="cat" onclick="filterByCategory('Camera')">
+<span>📷</span>
+Cameras
+</div>
+
+<div class="cat" onclick="filterByCategory('Event')">
+<span>🔊</span>
+Event Items
+</div>
+
+<div class="cat" onclick="filterByCategory('Tools')">
+<span>🛠️</span>
+Tools
+</div>
+
+<div class="cat" onclick="filterByCategory('Vehicles')">
+<span>🚗</span>
+Vehicles
+</div>
+
+<div class="cat" onclick="filterByCategory('Bikes')">
+<span>🚲</span>
+Bikes
+</div>
+
+<div class="cat" onclick="filterByCategory('Electronics')">
+<span>💻</span>
+Electronics
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ITEMS -->
+<section id="rentals" class="section rentals">
+
+<div class="container">
+
+<div class="section-head">
+
+<div>
+
+<h2>Available rentals</h2>
+
+<p class="muted">
+Search by item name, category or location.
+</p>
+
+</div>
+
+</div>
+
+<div class="search-container">
+<input type="text" id="search" placeholder="Search items...">
+<select id="location">
+<option value="">All Locations</option>
+<option>Male'</option>
+<option>Hulhumale</option>
+<option>Hulhulé</option>
+<option>Villingili</option>
+<option>Maafushi</option>
+<option>Thulusdhoo</option>
+<option>Himmafushi</option>
+<option>Dhiffushi</option>
+<option>Gaafaru</option>
+<option>Gulhi</option>
+<option>Guraidhoo</option>
+<option>Huraa</option>
+<option>Kaashidhoo</option>
+</select>
+</div>
+
+<div class="grid">
+
+<!-- ITEM -->
+<div class="card" data-category="Camera" data-location="Hulhumale">
+
+<div class="photo">
+📷
+</div>
+
+<div class="card-body">
+
+<div class="row">
+<span class="tag">Camera</span>
+<span class="price">MVR 150/day</span>
+</div>
+
+<h3>Canon Camera Kit</h3>
+
+<div class="location">
+📍 Hulhumale
+</div>
+
+<div class="contact">
+
+<a href="https://wa.me/9601234567">
+9601234567
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ITEM -->
+<div class="card" data-category="Event" data-location="Male'">
+
+<div class="photo">
+🔊
+</div>
+
+<div class="card-body">
+
+<div class="row">
+<span class="tag">Event</span>
+<span class="price">MVR 200/day</span>
+</div>
+
+<h3>Speaker Set</h3>
+
+<div class="location">
+📍 Male'
+</div>
+
+<div class="contact">
+
+<a href="https://wa.me/9607654321">
+9607654321
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ITEM -->
+<div class="card" data-category="Tools" data-location="Male'">
+
+<div class="photo">
+🛠️
+</div>
+
+<div class="card-body">
+
+<div class="row">
+<span class="tag">Tools</span>
+<span class="price">MVR 20/day</span>
+</div>
+
+<h3>Drill Machine</h3>
+
+<div class="location">
+📍 Male'
+</div>
+
+<div class="contact">
+
+<a href="https://wa.me/9609876543">
+9609876543
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- HOW -->
+<section class="section how">
+
+<div class="container">
+
+<div class="section-head">
+
+<div>
+
+<h2>How it works</h2>
+
+<p class="muted">
+RentHub only shows listings.
+</p>
+
+</div>
+
+</div>
+
+<div class="steps">
+
+<div class="step">
+<div class="num">1</div>
+
+<h3>Search items</h3>
+
+<p class="muted">
+Browse available rentals.
+</p>
+</div>
+
+<div class="step">
+<div class="num">2</div>
+
+<h3>Check price</h3>
+
+<p class="muted">
+See daily rental prices.
+</p>
+</div>
+
+<div class="step">
+<div class="num">3</div>
+
+<h3>Contact owner</h3>
+
+<p class="muted">
+Contact directly via WhatsApp.
+</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+<div class="container footer-row">
+
+<strong>RentHub.mv</strong>
+
+<span>
+© 2026 RentHub.mv
+</span>
+
+</div>
+
+</footer>
+
+<script>
+function filterByCategory(category) {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        if (card.dataset.category === category || category === 'all') {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+document.getElementById('search').addEventListener('input', function() {
+    const query = this.value.toLowerCase();
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        const title = card.querySelector('h3').textContent.toLowerCase();
+        const tag = card.querySelector('.tag').textContent.toLowerCase();
+        if (title.includes(query) || tag.includes(query)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+});
+
+document.getElementById('location').addEventListener('change', function() {
+    const location = this.value;
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        if (location === '' || card.dataset.location === location) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+});
+
+// Initially show all
+filterByCategory('all');
+</script>
+
+</body>
+</html>
