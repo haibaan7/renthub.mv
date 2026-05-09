@@ -39,7 +39,44 @@
         .info-item { background: #f8fdff; border: 1px solid var(--line); border-radius: 20px; padding: 18px; }
         .info-item strong { display: block; margin-bottom: 8px; color: var(--deep); }
         footer { padding: 32px 0; border-top: 1px solid var(--line); color: #667085; }
-        @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+        @media (max-width: 1024px) { 
+            .grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .nav { flex-wrap: wrap; gap: 12px; padding: 12px 0; }
+            .brand { font-size: 18px; }
+            .nav-links { gap: 12px; font-size: 14px; }
+            .hero { padding: 40px 0 20px; }
+            .hero h1 { font-size: 32px; }
+            .hero p { font-size: 14px; }
+            .form-card, .card { padding: 20px; border-radius: 20px; }
+            .form-group { margin-bottom: 14px; }
+            .form-group label { font-size: 14px; }
+            .form-group input, .form-group textarea { padding: 12px 14px; font-size: 14px; }
+            .btn { padding: 12px 18px; font-size: 14px; }
+            .info-item { padding: 14px; border-radius: 16px; }
+            .info-item strong { font-size: 14px; }
+            .info-item a, .info-item p { font-size: 12px; }
+        }
+        @media (max-width: 480px) {
+            .container { width: min(100%, 95%); }
+            .nav { padding: 10px 0; gap: 8px; }
+            .brand { font-size: 16px; }
+            .nav-links { gap: 8px; font-size: 12px; }
+            .hero { padding: 30px 0 15px; }
+            .hero h1 { font-size: 24px; margin-bottom: 10px; }
+            .hero p { font-size: 13px; line-height: 1.5; }
+            .form-card, .card { padding: 16px; border-radius: 16px; }
+            .form-group { margin-bottom: 12px; gap: 6px; }
+            .form-group label { font-size: 12px; }
+            .form-group input, .form-group textarea { padding: 10px 12px; font-size: 13px; }
+            .form-group textarea { min-height: 120px; }
+            .btn { padding: 10px 14px; font-size: 12px; width: 100%; }
+            .info-list { gap: 12px; }
+            .info-item { padding: 12px; }
+            .info-item strong { font-size: 12px; }
+            .info-item a, .info-item p { font-size: 11px; margin-top: 4px; }
+        }
     </style>
 </head>
 <body>
@@ -103,7 +140,7 @@
     </main>
 
     <footer class="container">
-        <p>© 2026 RentHub.mv · Your Maldives rental marketplace</p>
+        <p>ï¿½ 2026 RentHub.mv ï¿½ Your Maldives rental marketplace</p>
     </footer>
 </body>
 </html>
