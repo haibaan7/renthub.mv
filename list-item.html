@@ -125,8 +125,8 @@
                         <input id="item-contact" type="text" placeholder="e.g. 7873090">
                     </div>
                     <div class="field">
-                        <label for="item-photo">Photo URL</label>
-                        <input id="item-photo" type="text" placeholder="https://example.com/photo.jpg">
+                        <label for="item-photo">Upload Photo</label>
+                        <input id="item-photo" type="file" accept="image/*">
                     </div>
                     <div class="field">
                         <label for="item-description">Description</label>
@@ -167,14 +167,34 @@
             const price = document.getElementById('item-price').value;
             const location = document.getElementById('item-location').value;
             const contact = document.getElementById('item-contact').value;
-            const photo = document.getElementById('item-photo').value;
+            const photoInput = document.getElementById('item-photo');
             const description = document.getElementById('item-description').value;
 
-            const message = `🏠 New Rental Listing on RentHub.mv\n\n📌 Title: ${title}\n🏷️ Category: ${category}\n💰 Price: ${price}\n📍 Location: ${location}\n📞 Contact: ${contact}\n🖼️ Photo: ${photo}\n📝 Description: ${description}\n\n#RentHub #MaldivesRentals`;
+            if (!title || !category || !price || !location || !contact || !description) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            if (photoInput.files.length > 0) {
+                const file = photoInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const photoData = e.target.result;
+                    sendMessage(title, category, price, location, contact, photoData, description);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please select a photo');
+                return;
+            }
+        });
+
+        function sendMessage(title, category, price, location, contact, photoData, description) {
+            const message = `🏠 New Rental Listing on RentHub.mv\n\n📌 Title: ${title}\n🏷️ Category: ${category}\n💰 Price: ${price}\n📍 Location: ${location}\n📞 Contact: ${contact}\n📝 Description: ${description}\n\n#RentHub #MaldivesRentals`;
 
             const whatsappUrl = `https://wa.me/9607873015?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, 'https://wa.me/9607873015');
-        });
+            window.open(whatsappUrl, '_blank');
+        }
     </script>
 </body>
 </html>
