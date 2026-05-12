@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Item | RentHub.mv</title>
+    <meta name="description" content="List an item for rent on RentHub.mv.">
+    <style>
+        :root {
+            --deep: #0B3C5D;
+            --teal: #00A8A8;
+            --gray: #f3f6f8;
+            --line: #e6edf2;
+            --shadow: 0 18px 45px rgba(11, 60, 93, .12);
+            --radius: 24px;
+        }
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: Inter, Arial, sans-serif; background: #fbfdff; color: var(--deep); }
+        a { color: inherit; text-decoration: none; }
+        button, input, textarea, select { font: inherit; }
+        .container { width: min(1120px, 94%); margin: auto; }
+        header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.95); backdrop-filter: blur(18px); border-bottom: 1px solid var(--line); }
+        .nav { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 18px 0; }
+        .brand { font-weight: 900; font-size: 22px; }
+        .nav-links { display: flex; align-items: center; gap: 20px; color: #344054; font-weight: 700; }
+        .nav-links a:hover, .nav-links a.active { color: var(--teal); }
+        .hero { padding: 70px 0 30px; }
+        .hero h1 { margin: 0 0 14px; font-size: clamp(34px, 5vw, 52px); }
+        .hero p { margin: 0; color: #475467; line-height: 1.75; max-width: 680px; }
+        .grid { display: grid; grid-template-columns: 1.35fr .85fr; gap: 28px; }
+        .form-card, .info-card { background: #fff; border: 1px solid var(--line); border-radius: 28px; box-shadow: var(--shadow); padding: 28px; }
+        .form-card.animate, .info-card.animate, .hero.animate { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+        .form-card.visible, .info-card.visible, .hero.visible { opacity: 1; transform: translateY(0); }
+        .theme-toggle { background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 10px 14px; font-size: 18px; cursor: pointer; transition: .25s; }
+        .theme-toggle:hover { background: #f3f7fa; }
+        body.dark-mode { background: #07141f; color: #e9f2ff; }
+        body.dark-mode header, body.dark-mode .form-card, body.dark-mode .info-card, body.dark-mode .field input, body.dark-mode .field textarea, body.dark-mode .field select, body.dark-mode .btn, body.dark-mode .theme-toggle { background: #0b1d2f; border-color: #173246; color: #d9e6f5; }
+        body.dark-mode .hero { background: #07141f; }
+        body.dark-mode .info-box { background: #0c2538; border-color: #173246; }
+        body.dark-mode .field input, body.dark-mode .field textarea, body.dark-mode .field select { background: #0b1d2f; }
+        body.dark-mode .btn { background: #1b4b68; }
+        body.dark-mode .brand, body.dark-mode .nav-links a, body.dark-mode .info-box strong, body.dark-mode p { color: #c1d7f1; }
+        .form-grid { display: grid; gap: 18px; }
+        .field { display: grid; gap: 10px; }
+        .field label { font-weight: 700; color: var(--deep); }
+        .field input, .field textarea, .field select { width: 100%; padding: 14px 16px; border: 1px solid var(--line); border-radius: 16px; background: #fff; }
+        .field textarea { min-height: 150px; resize: vertical; }
+        .btn { border: 0; border-radius: 999px; padding: 15px 24px; background: var(--deep); color: #fff; font-weight: 900; cursor: pointer; }
+        .info-card h2 { margin-top: 0; }
+        .info-row { display: grid; gap: 16px; margin-top: 22px; }
+        .info-box { border: 1px solid var(--line); border-radius: 22px; padding: 18px; background: #f8fdff; }
+        footer { padding: 32px 0; border-top: 1px solid var(--line); color: #667085; }
+        @media (max-width: 1024px) { 
+            .grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .nav { flex-wrap: wrap; gap: 12px; padding: 12px 0; }
+            .brand { font-size: 18px; }
+            .nav-links { gap: 12px; font-size: 14px; }
+            .hero { padding: 40px 0 20px; }
+            .hero h1 { font-size: 32px; }
+            .hero p { font-size: 14px; }
+            .form-card, .info-card { padding: 20px; border-radius: 20px; }
+            .field label { font-size: 14px; }
+            .field input, .field textarea, .field select { padding: 12px 14px; font-size: 14px; }
+            .btn { padding: 12px 18px; font-size: 14px; }
+            .info-box { padding: 14px; }
+            .info-box strong { font-size: 14px; }
+            .info-box p { font-size: 12px; }
+        }
+        @media (max-width: 480px) {
+            .container { width: min(100%, 95%); }
+            .nav { padding: 10px 0; gap: 8px; }
+            .brand { font-size: 16px; }
+            .nav-links { gap: 8px; font-size: 12px; }
+            .hero { padding: 30px 0 15px; }
+            .hero h1 { font-size: 24px; margin-bottom: 10px; }
+            .hero p { font-size: 13px; line-height: 1.5; }
+            .form-grid { gap: 14px; }
+            .field { gap: 6px; }
+            .field label { font-size: 12px; }
+            .field input, .field textarea, .field select { padding: 10px 12px; font-size: 13px; }
+            .field textarea { min-height: 120px; }
+            .btn { padding: 10px 14px; font-size: 12px; width: 100%; }
+            .info-card h2 { font-size: 22px; }
+            .info-box { padding: 12px; border-radius: 16px; }
+            .info-box strong { font-size: 12px; }
+            .info-box p { font-size: 11px; margin: 4px 0 0; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav">
+            <a class="brand" href="index.html">RentHub.mv</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a class="active" href="list-item.html">List Item</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero animate">
+            <h1>List your rental item in minutes</h1>
+            <p>Share your equipment, boat, or accommodation with renters across Maldives. Our simple form helps you publish a listing fast.</p>
+        </section>
+
+        <div class="grid">
+            <div class="form-card animate">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="item-title">Item title</label>
+                        <input id="item-title" type="text" placeholder="e.g. GoPro Hero 11 Black">
+                    </div>
+                    <div class="field">
+                        <label for="item-category">Category</label>
+                        <select id="item-category">
+                            <option>Accommodation</option>
+                            <option>Electronics</option>
+                            <option>Tools</option>
+                            <option>Boats & Water Sports</option>
+                            <option>Camera</option>
+                            <option>Event Items</option>
+                            <option>Vehicles</option>
+                            <option>Bikes</option>
+                            <option>Party Supplies</option>
+                            <option>Photography</option>
+                            <option>Sports Equipment</option>
+                            <option>Musical Instruments</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="item-price">Price</label>
+                        <input id="item-price" type="text" placeholder="e.g. 250 / day">
+                    </div>
+                    <div class="field">
+                        <label for="item-location">Location</label>
+                        <input id="item-location" type="text" list="location-list" placeholder="Search or select a location">
+                        <datalist id="location-list">
+                            <option>Malé</option>
+                            <option>Hulhumalé</option>
+                            <option>Vilimalé</option>
+                            <option>Baarah</option>
+                            <option>Dhiddhoo</option>
+                            <option>Filladhoo</option>
+                            <option>Hoarafushi</option>
+                            <option>Ihavandhoo</option>
+                            <option>Kelaa</option>
+                            <option>Maarandhoo</option>
+                            <option>Mulhadhoo</option>
+                            <option>Muraidhoo</option>
+                            <option>Thakandhoo</option>
+                            <option>Thuraakunu</option>
+                            <option>Uligamu</option>
+                            <option>Utheemu</option>
+                            <option>Vashafaru</option>
+                            <option>Faridhoo</option>
+                            <option>Finey</option>
+                            <option>Hanimaadhoo</option>
+                            <option>Hirimaradhoo</option>
+                            <option>Kunburudhoo</option>
+                            <option>Kulhudhuffushi</option>
+                            <option>Kumundhoo</option>
+                            <option>Kurinbi</option>
+                            <option>Maavaidhoo</option>
+                            <option>Makunudhoo</option>
+                            <option>Naivaadhoo</option>
+                            <option>Nellaidhoo</option>
+                            <option>Neykurendhoo</option>
+                            <option>Nolhivaram</option>
+                            <option>Nolhivaranfaru</option>
+                            <option>Vaikaradhoo</option>
+                            <option>Bileffahi</option>
+                            <option>Feydhoo</option>
+                            <option>Feevah</option>
+                            <option>Foakaidhoo</option>
+                            <option>Funadhoo</option>
+                            <option>Goidhoo</option>
+                            <option>Kanditheemu</option>
+                            <option>Komandoo</option>
+                            <option>Lhaimagu</option>
+                            <option>Maaungoodhoo</option>
+                            <option>Maroshi</option>
+                            <option>Milandhoo</option>
+                            <option>Narudhoo</option>
+                            <option>Noomaraa</option>
+                            <option>Foddhoo</option>
+                            <option>Henbadhoo</option>
+                            <option>Holhudhoo</option>
+                            <option>Kendhikulhudhoo</option>
+                            <option>Kudafari</option>
+                            <option>Landhoo</option>
+                            <option>Lhohi</option>
+                            <option>Maafaru</option>
+                            <option>Magoodhoo</option>
+                            <option>Manadhoo</option>
+                            <option>Miladhoo</option>
+                            <option>Velidhoo</option>
+                            <option>Alifushi</option>
+                            <option>Angolhitheemu</option>
+                            <option>Dhuvaafaru</option>
+                            <option>Fainu</option>
+                            <option>Hulhudhuffaaru</option>
+                            <option>Inguraidhoo</option>
+                            <option>Innamaadhoo</option>
+                            <option>Kinolhas</option>
+                            <option>Maakurathu</option>
+                            <option>Maduvvari</option>
+                            <option>Meedhoo</option>
+                            <option>Rasgetheemu</option>
+                            <option>Rasmaadhoo</option>
+                            <option>Ungoofaaru</option>
+                            <option>Vaadhoo</option>
+                            <option>Dharavandhoo</option>
+                            <option>Dhonfanu</option>
+                            <option>Eydhafushi</option>
+                            <option>Fehendhoo</option>
+                            <option>Fulhadhoo</option>
+                            <option>Goidhoo</option>
+                            <option>Hithaadhoo</option>
+                            <option>Kamadhoo</option>
+                            <option>Kendhoo</option>
+                            <option>Kihaadhoo</option>
+                            <option>Kudarikilu</option>
+                            <option>Maalhos</option>
+                            <option>Thulhaadhoo</option>
+                            <option>Hinnavaru</option>
+                            <option>Kurendhoo</option>
+                            <option>Naifaru</option>
+                            <option>Olhuvelifushi</option>
+                            <option>Dhiffushi</option>
+                            <option>Gaafaru</option>
+                            <option>Gulhi</option>
+                            <option>Guraidhoo</option>
+                            <option>Himmafushi</option>
+                            <option>Huraa</option>
+                            <option>Kaashidhoo</option>
+                            <option>Maafushi</option>
+                            <option>Thulusdhoo</option>
+                            <option>Bodufolhudhoo</option>
+                            <option>Feridhoo</option>
+                            <option>Himandhoo</option>
+                            <option>Maalhos</option>
+                            <option>Mathiveri</option>
+                            <option>Rasdhoo</option>
+                            <option>Thoddoo</option>
+                            <option>Ukulhas</option>
+                            <option>Dhangethi</option>
+                            <option>Dhiddhoo</option>
+                            <option>Dhigurah</option>
+                            <option>Fenfushi</option>
+                            <option>Haggnaameedhoo</option>
+                            <option>Kunburudhoo</option>
+                            <option>Maamigili</option>
+                            <option>Mahibadhoo</option>
+                            <option>Mandhoo</option>
+                            <option>Omadhoo</option>
+                            <option>Felidhoo</option>
+                            <option>Fulidhoo</option>
+                            <option>Keyodhoo</option>
+                            <option>Rakeedhoo</option>
+                            <option>Thinadhoo</option>
+                            <option>Dhiggaru</option>
+                            <option>Kolhufushi</option>
+                            <option>Madifushi</option>
+                            <option>Maduvvari</option>
+                            <option>Mulah</option>
+                            <option>Muli</option>
+                            <option>Naalaafushi</option>
+                            <option>Raimmandhoo</option>
+                            <option>Veyvah</option>
+                            <option>Bilehdhoo</option>
+                            <option>Dharanboodhoo</option>
+                            <option>Feeali</option>
+                            <option>Magoodhoo</option>
+                            <option>Nilandhoo</option>
+                            <option>Bandidhoo</option>
+                            <option>Gemendhoo</option>
+                            <option>Hulhudheli</option>
+                            <option>Kudahuvadhoo</option>
+                            <option>Maaenboodhoo</option>
+                            <option>Meedhoo</option>
+                            <option>Rinbudhoo</option>
+                            <option>Vaanee</option>
+                            <option>Burunee</option>
+                            <option>Dhiyamigili</option>
+                            <option>Gaadhiffushi</option>
+                            <option>Guraidhoo</option>
+                            <option>Hirilandhoo</option>
+                            <option>Kandoodhoo</option>
+                            <option>Kinbidhoo</option>
+                            <option>Madifushi</option>
+                            <option>Omadhoo</option>
+                            <option>Thimarafushi</option>
+                            <option>Vandhoo</option>
+                            <option>Veymandoo</option>
+                            <option>Vilufushi</option>
+                            <option>Dhanbidhoo</option>
+                            <option>Fonadhoo</option>
+                            <option>Gan</option>
+                            <option>Hithadhoo</option>
+                            <option>Isdhoo</option>
+                            <option>Kalaidhoo</option>
+                            <option>Kunahandhoo</option>
+                            <option>Maabaidhoo</option>
+                            <option>Maamendhoo</option>
+                            <option>Maavah</option>
+                            <option>Mundoo</option>
+                            <option>Dhaandhoo</option>
+                            <option>Dhevvadhoo</option>
+                            <option>Gemanafushi</option>
+                            <option>Kanduhulhudhoo</option>
+                            <option>Kolamaafushi</option>
+                            <option>Kondey</option>
+                            <option>Maamendhoo</option>
+                            <option>Nilandhoo</option>
+                            <option>Vilingili</option>
+                            <option>Faresmaathodaa</option>
+                            <option>Fiyoaree</option>
+                            <option>Gaddhoo</option>
+                            <option>Hoandeddhoo</option>
+                            <option>Madaveli</option>
+                            <option>Nadellaa</option>
+                            <option>Rathafandhoo</option>
+                            <option>Thinadhoo</option>
+                            <option>Vaadhoo</option>
+                            <option>Fuvahmulah</option>
+                            <option>Feydhoo</option>
+                            <option>Hithadhoo</option>
+                            <option>Hulhudhoo</option>
+                            <option>Maradhoo</option>
+                            <option>Maradhoofeydhoo</option>
+                            <option>Meedhoo</option>
+                        </datalist>
+                    </div>
+                    <div class="field">
+                        <label for="item-contact">Contact number</label>
+                        <input id="item-contact" type="text" placeholder="e.g. 7873090">
+                    </div>
+                    <div class="field">
+                        <label for="item-photo">Upload Photo</label>
+                        <input id="item-photo" type="file" accept="image/*">
+                    </div>
+                    <div class="field">
+                        <label for="item-description">Description</label>
+                        <textarea id="item-description" placeholder="Tell renters about the item and availability."></textarea>
+                    </div>
+                    <button type="button" class="btn" id="submit-btn">Submit listing</button>
+                </div>
+            </div>
+
+            <div class="info-card animate">
+                <h2>How it works</h2>
+                <div class="info-row">
+                    <div class="info-box">
+                        <strong>1. Add your item</strong>
+                        <p>Provide a title, price, location, and contact details so renters can find you.</p>
+                    </div>
+                    <div class="info-box">
+                        <strong>2. Stay responsive</strong>
+                        <p>Respond quickly to WhatsApp and calls from interested renters.</p>
+                    </div>
+                    <div class="info-box">
+                        <strong>3. Get bookings</strong>
+                        <p>Let renters know your availability and finalise rental details directly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="container">
+        <p>© 2026 RentHub.mv • Start listing rentals across Maldives.</p>
+    </footer>
+
+    <script>
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            const title = document.getElementById('item-title').value;
+            const category = document.getElementById('item-category').value;
+            const price = document.getElementById('item-price').value;
+            const location = document.getElementById('item-location').value;
+            const contact = document.getElementById('item-contact').value;
+            const photoInput = document.getElementById('item-photo');
+            const description = document.getElementById('item-description').value;
+
+            if (!title || !category || !price || !location || !contact || !description) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            if (photoInput.files.length > 0) {
+                const file = photoInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const photoData = e.target.result;
+                    sendMessage(title, category, price, location, contact, photoData, description);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please select a photo');
+                return;
+            }
+        });
+
+        function sendMessage(title, category, price, location, contact, photoData, description) {
+            const message = `🏠 New Rental Listing on RentHub.mv\n\n📌 Title: ${title}\n🏷️ Category: ${category}\n💰 Price: ${price}\n📍 Location: ${location}\n📞 Contact: ${contact}\n📝 Description: ${description}\n\n#RentHub #MaldivesRentals`;
+
+            const whatsappUrl = `https://wa.me/9607873015?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+
+            if (confirm('Listing submitted. Do you want to make a new listing?')) {
+                resetListingForm();
+            }
+        }
+
+        function resetListingForm() {
+            document.getElementById('item-title').value = '';
+            document.getElementById('item-category').selectedIndex = 0;
+            document.getElementById('item-price').value = '';
+            document.getElementById('item-location').value = '';
+            document.getElementById('item-contact').value = '';
+            document.getElementById('item-photo').value = '';
+            document.getElementById('item-description').value = '';
+        }
+
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            this.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('renthub_theme', isDark ? 'dark' : 'light');
+        });
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('renthub_theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('theme-toggle').textContent = '☀️';
+            }
+        }
+
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+        }
+
+        initTheme();
+        initScrollAnimations();
+    </script>
+</body>
+</html>
